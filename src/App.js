@@ -2,14 +2,19 @@ import React from 'react';
 
 import './App.css';
 
+// import Diary from './containers/Diary/Diary'
+import AppHeader from './components/Header/AppHeader'
+import Diary from './containers/Diary/Diary'
+
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Hello Demo</h1>
-      </header>
+    <div >
+      <AppHeader />
+      <Diary />
+      <Diary />
     </div>
-  );
+    
+);
 }
 
 export default App;

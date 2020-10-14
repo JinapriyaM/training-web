@@ -14,9 +14,9 @@ const useStyles = makeStyles({
 	root: {
 		// minWidth: 50,
 		// maxWidth: 700,
-        // minHeight: 366,
-        marginTop: 200,
-        marginBottom: 200
+		// minHeight: 366,
+		marginTop: 200,
+		marginBottom: 200
 	},
 	bullet: {
 		display: "inline-block",
@@ -32,10 +32,10 @@ const useStyles = makeStyles({
 	},
 	cardheaderfont: {
 		fontSize: 15,
-    },
-    cardcon: {
-        justifyContent: "center"
-    },
+	},
+	cardcon: {
+		justifyContent: "center"
+	},
 	pos: {
 		marginTop: 20,
 	},
@@ -44,46 +44,78 @@ const useStyles = makeStyles({
 const Home = (props) => {
 	const classes = useStyles();
 	return (
-		<Grid container direction="column">
-			
+		<Grid container direction="column" >
+
 			<Grid item container className={classes.gridback}>
 				<Grid item xs={0} sm={2} />
 				<Grid item xs={12} sm={8}>
-					<Card className={classes.root} style={{ backgroundColor: "#FFFFFF" }}>
+					<Card className={classes.root} style={{ backgroundColor: "#FFFFFF", borderRadius: 10 }}>
 						<CardHeader
 							title="Dear Diary"
 							classes={classes.cardheaderfont}
 							titleTypographyProps={{ variant: "h6" }}
 						/>
 						<CardContent >
-							<Typography
-								className={classes.title}
-								variant="h1"
-								align="center"
-								gutterBottom
-							>
-								Sign In
-							</Typography>
-							<form
-								id="login"
-								className={classes.form}
-                                noValidate
-                                align="center"
-								// onSubmit={handleSubmit}
-							>
-								<TextField
-									id="outlined-secondary"
-									label="Outlined secondary"
-									variant="outlined"
-                                    color="primary"
-                                    required
-								/>
-								<CardActions align="center">
-									<Button  size="small" variant="contained" color="primary" type="submit" style={{ borderRadius: 50 }}>
-										Submit
-									</Button>
-								</CardActions>
-							</form>
+							<Grid container >
+								<Grid item xs={0} sm={2}>
+									{/* <TextField
+										id="outlined-secondary"
+										label="Username"
+										variant="outlined"
+										color="primary"
+										required
+										align="center"
+									/> */}
+								</Grid>
+								<Grid item xs={12} sm={8} >
+									<Grid item container justify="center" alignItems="center">
+										<Grid item spacing={5}>
+											<Typography
+												className={classes.title}
+												variant="h1"
+												gutterBottom
+												align="center"
+											>
+												Sign In
+											</Typography>
+											<form
+												id="login"
+												// className={classes.form}
+												noValidate
+
+											// onSubmit={handleSubmit}
+											>
+												<TextField
+													id="outlined-secondary"
+													label="Username"
+													variant="outlined"
+													color="primary"
+													required
+
+												/>
+												<Button size="small" align="center" variant="contained" color="primary" type="submit" style={{ borderRadius: 30 }}>
+														Submit
+													</Button>
+												<CardActions >
+													<Button size="large" align="center" variant="contained" color="primary" type="submit" style={{ borderRadius: 30 }}>
+														Continue
+													</Button>
+												</CardActions>
+											</form>
+										</Grid>
+									</Grid>
+								</Grid>
+								<Grid item xs={0} sm={2}>
+									{/* <TextField
+										id="outlined-secondary"
+										label="Username"
+										variant="outlined"
+										color="primary"
+										required
+										align="center"
+									/> */}
+								</Grid>
+							</Grid>
 						</CardContent>
 					</Card>
 				</Grid>

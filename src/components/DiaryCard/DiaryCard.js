@@ -27,26 +27,38 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SimpleCard() {
+const SimpleCard = (props) => {
   const classes = useStyles();
+  let description = null;
+  const showMoreHandler = () => {
+    description = props.desc
+  }
 
-
+  let showMore = null;
+  
+  if(props.desc.length>10){
+    description = props.desc.substring(0,5)+"...";
+    showMore = (<CardActions>
+      <Button size="small" onSubmit={showMoreHandler}>Show More</Button>
+    </CardActions>)
+  }
+  
   return (
-    <Card className={classes.root} style={{backgroundColor: "#B9E9FF", margin: 20}}>
+    <Card className={classes.root} style={{backgroundColor: "#B9E9FF", borderRadius: 15}}>
       <CardContent >
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Word of the Day
+        <Typography className={classes.title} variant="h1"  gutterBottom>
+          {props.title}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          
+          {props.user}
         </Typography>
         <Typography variant="body2" component="p">
-          well meaning and kindly.
+          {description}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small">Show More</Button>
-      </CardActions>
+      {showMore}
     </Card>
   );
 }
+
+export default SimpleCard;

@@ -14,12 +14,8 @@ class Diary extends Component {
 		super(props);
 		this.wrapper = React.createRef();
 		this.state = {
-			det: [{ title: "aaccaaaa", user: "bbbb", description: "fjlajffjjfjsdjfjsljfd" },
-			{ title: "aaaaaa", user: "bbbb", description: "fjlajffjjfjsdjfjsljfd" },
-			{ title: "aaaaaa", user: "bbbb", description: "fjlajffjjfjsdjfjsljfd" },
-			{ title: "aaaaaa", user: "bbbb", description: "fjlajffjjfjsdjfjsljfd" },
-			{ title: "aaaaaa", user: "bbbb", description: "fjlajffjjfjsdjfjsljfd" },
-			{ title: "aaaaaa", user: "bbbb", description: "fjlajffjjfjsdjfjsljfd" }],
+			det: [{ title: "aaccaaaa", user: "bbbb", description: "fjlajffjjfjsdjfjsljfd" }
+			],
 			checked: false,
 			currentUser: "",
 			textTitle: "",

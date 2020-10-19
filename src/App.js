@@ -16,9 +16,8 @@ function App() {
         <Route path="/" exact>
           <Login />
         </Route>
-        <Route path="/home" exact>
-          <Diary />
-        </Route>
+        <Route path="/home" component={Diary} exact />
+        
       </Switch>
 			{/* <AppHeader />
 			<Diary />

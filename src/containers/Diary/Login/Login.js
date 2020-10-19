@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import {Redirect} from 'react-router-dom';
 
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -41,11 +42,34 @@ const useStyles = makeStyles({
 	},
 });
 
-const Home = (props) => {
-	const classes = useStyles();
-	return (
-		<Grid container direction="column" >
 
+
+const nameList = ["Liam", "Noah", "William", "James", "Oliver", "Benjamin", "Elijah", "Lucas", "Mason", "Logan"];
+
+
+const Home = (props) => {
+	const [name, setName] = useState("");
+	const [redirect, setRedirect] = useState(false);
+	const classes = useStyles();
+	const randomName = () => {
+
+	}
+	const randomNameHandler = (event) => {
+		event.preventDefault();
+		let randomIndex = Math.floor(Math.random() * Math.floor(10))
+		setName(nameList[randomIndex]);
+	}
+	const onSubmitHandler = event => {
+		event.preventDefault();
+		alert(`submit name ${name}`);
+		setRedirect(true);
+	}
+	const isRedirect = redirect ? <Redirect to={{pathname: '/home', state: {userName : name}}} /> : null;
+	
+	return (
+		
+		<Grid container direction="column" >
+			{isRedirect}
 			<Grid item container className={classes.gridback}>
 				<Grid item xs={0} sm={2} />
 				<Grid item xs={12} sm={8}>
@@ -68,8 +92,9 @@ const Home = (props) => {
 									/> */}
 								</Grid>
 								<Grid item xs={12} sm={8} >
-									<Grid item container justify="center" alignItems="center">
-										<Grid item spacing={5}>
+									<Grid item container direction="column" >
+
+										<Grid item >
 											<Typography
 												className={classes.title}
 												variant="h1"
@@ -78,31 +103,47 @@ const Home = (props) => {
 											>
 												Sign In
 											</Typography>
+										</Grid>
+										<Grid item xs>
 											<form
 												id="login"
 												// className={classes.form}
 												noValidate
-
+												onSubmit={onSubmitHandler}
 											// onSubmit={handleSubmit}
 											>
-												<TextField
-													id="outlined-secondary"
-													label="Username"
-													variant="outlined"
-													color="primary"
-													required
-
-												/>
-												<Button size="small" align="center" variant="contained" color="primary" type="submit" style={{ borderRadius: 30 }}>
-														Submit
+												<Grid item xs container alignItems="center" spacing={2}>
+													<Grid item xs={10} >
+														<TextField
+															id="outlined-secondary"
+															label="Username"
+															variant="outlined"
+															color="primary"
+															required
+															helperText="Required"
+															fullWidth
+															onChange={e => setName(e.target.value)}
+															value={name}
+														/>
+													</Grid>
+													<Grid item xs={2} >
+														<Button onClick={randomNameHandler} size="small" align="center" variant="contained" color="primary" type="submit" style={{ borderRadius: 30 }}>
+															Random
+														</Button>
+													</Grid>
+												</Grid>
+												<Grid item xs container justifyContent="center">
+													<Grid item>
+														<CardActions >
+															<Button size="large" align="center" variant="contained" color="primary" type="submit" style={{ borderRadius: 30 }}>
+																Continue
 													</Button>
-												<CardActions >
-													<Button size="large" align="center" variant="contained" color="primary" type="submit" style={{ borderRadius: 30 }}>
-														Continue
-													</Button>
-												</CardActions>
+														</CardActions>
+													</Grid>
+												</Grid>
 											</form>
 										</Grid>
+
 									</Grid>
 								</Grid>
 								<Grid item xs={0} sm={2}>

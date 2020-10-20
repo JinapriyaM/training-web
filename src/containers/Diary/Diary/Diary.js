@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {connect} from 'react-redux';
 
 import DiaryCard from "../../../components/DiaryCard/DiaryCard";
 import AppHeader from "../../../components/Header/AppHeader";
@@ -6,7 +7,7 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button"
 import TextField from "@material-ui/core/TextField"
 import Collapse from "@material-ui/core/Collapse"
-import { ContactSupportOutlined } from "@material-ui/icons";
+//import { ContactSupportOutlined } from "@material-ui/icons";
 
 
 class Diary extends Component {
@@ -14,35 +15,34 @@ class Diary extends Component {
 		super(props);
 		this.wrapper = React.createRef();
 		this.state = {
-			det: [{ title: "aaccaaaa", user: "bbbb", description: "fjlajffjjfjsdjfjsljfd" }
-			],
 			checked: false,
-			currentUser: "",
-			textTitle: "",
-			textDescription: ""
 		}
 	}
 
 	componentDidMount(props) {
-		console.log(this.props.location.state.userName)
-		this.setState({
-			currentUser: this.props.location.state.userName
-		})
+		console.log(this.props.currentUser)
+		
 	}
 
 	render() {
 		const onSubmitHandler = (event) => {
 			event.preventDefault();
-			if (this.state.textTitle.length === 0) {
+			if (this.props.textTitle.length === 0) {
 				console.log("empty title");
-			} else if (this.state.textDescription.length === 0) {
+			} else if (this.props.textDescription.length === 0) {
 				console.log("empty description");
 			} else {
-				this.setState(prev => ({
-					det: prev.det.concat({ title: prev.textTitle, user: prev.currentUser, description: prev.textDescription }),
-					textTitle: "",
-					textDescription: ""
-				}))
+				this.props.onSubmitCard({ title: this.props.textTitle, user: this.props.currentUser, description: this.props.textDescription });
+				//this.props.toClearVals();
+				// this.setState(prev => ({
+				// 	det: prev.det.concat({ title: prev.textTitle, user: prev.currentUser, description: prev.textDescription }),
+				// 	textTitle: "",
+				// 	textDescription: ""
+				// }))
+				// this.setState({
+				// 	textTitle: "",
+				// 	textDescription: ""
+				// })
 
 			}
 		}
@@ -51,12 +51,11 @@ class Diary extends Component {
 				checked: !prev.checked
 			}))
 		};
-		const cards = this.state.det.map((i, index) => {
+		const cards = this.props.det.map((i, index) => {
 			return <Grid key={index} xs={3} item ><DiaryCard key={index} title={i.title} user={i.user} desc={i.description} /></Grid>
 		})
 		return (
 			<React.Fragment>
-
 				<AppHeader />
 				<div >
 					<Grid item container >
@@ -74,10 +73,11 @@ class Diary extends Component {
 										style={{}}
 										placeholder="Emter new text"
 										onClick={handleChange}
-										value={this.state.textTitle}
+										value={this.props.textTitle}
 										fullWidth
 										margin="normal"
-										onChange={e => this.setState({ textTitle: e.target.value })}
+										onChange={e => this.props.toSetVals({ textTitle: e.target.value, textDescription: this.props.textDescription })}
+										// onChange={e => this.setState({ textTitle: e.target.value })}
 
 									/>
 									{/* <input 
@@ -102,8 +102,8 @@ class Diary extends Component {
 												color="primary"
 												required
 												multiline
-												value={this.state.textDescription}
-												onChange={e => this.setState({ textDescription: e.target.value })}
+												value={this.props.textDescription}
+												onChange={e => this.props.toSetVals({ textTitle: this.props.textTitle, textDescription: e.target.value })}
 												rows={5}
 												fullWidth
 											/>
@@ -123,4 +123,20 @@ class Diary extends Component {
 	}
 }
 
-export default Diary;
+const mapStateToProps = state => {
+	return {
+		currentUser: state.usr.user,
+		textTitle: state.dry.textTitle,
+		textDescription: state.dry.textDescription,
+		det: state.dry.cardsDet
+	}
+}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		onSubmitCard : (data) => dispatch({type: 'ADD_CARD', val: data}),
+		toSetVals : (data) => dispatch({type: 'SET_VALUES', val: data})
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Diary);

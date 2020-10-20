@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -57,14 +58,16 @@ const Home = (props) => {
 	const randomNameHandler = (event) => {
 		event.preventDefault();
 		let randomIndex = Math.floor(Math.random() * Math.floor(10))
-		setName(nameList[randomIndex]);
+		//setName(nameList[randomIndex]);
+		props.onRandomName(randomIndex);
 	}
 	const onSubmitHandler = event => {
 		event.preventDefault();
+		//props.onRandomName;
 		alert(`submit name ${name}`);
 		setRedirect(true);
 	}
-	const isRedirect = redirect ? <Redirect to={{pathname: '/home', state: {userName : name}}} /> : null;
+	const isRedirect = redirect ? <Redirect to={{pathname: '/home'}} /> : null;
 	
 	return (
 		
@@ -82,14 +85,7 @@ const Home = (props) => {
 						<CardContent >
 							<Grid container >
 								<Grid item xs={0} sm={2}>
-									{/* <TextField
-										id="outlined-secondary"
-										label="Username"
-										variant="outlined"
-										color="primary"
-										required
-										align="center"
-									/> */}
+									
 								</Grid>
 								<Grid item xs={12} sm={8} >
 									<Grid item container direction="column" >
@@ -122,8 +118,8 @@ const Home = (props) => {
 															required
 															helperText="Required"
 															fullWidth
-															onChange={e => setName(e.target.value)}
-															value={name}
+															// onChange={e => setName(e.target.value)}
+															value={props.user}
 														/>
 													</Grid>
 													<Grid item xs={2} >
@@ -137,7 +133,7 @@ const Home = (props) => {
 														<CardActions >
 															<Button size="large" align="center" variant="contained" color="primary" type="submit" style={{ borderRadius: 30 }}>
 																Continue
-													</Button>
+														</Button>
 														</CardActions>
 													</Grid>
 												</Grid>
@@ -147,14 +143,7 @@ const Home = (props) => {
 									</Grid>
 								</Grid>
 								<Grid item xs={0} sm={2}>
-									{/* <TextField
-										id="outlined-secondary"
-										label="Username"
-										variant="outlined"
-										color="primary"
-										required
-										align="center"
-									/> */}
+									
 								</Grid>
 							</Grid>
 						</CardContent>
@@ -166,4 +155,16 @@ const Home = (props) => {
 	);
 };
 
-export default Home;
+const mapStateToProps = state => {
+	return {
+		user: state.usr.user
+	}
+};
+
+const mapDispatchToProps = dispatch => {
+	return {
+		onRandomName : (ind) => dispatch({type: 'RANDOM_NAME', val: ind}) 
+	}
+} 
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

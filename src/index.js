@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
@@ -9,12 +9,19 @@ import * as serviceWorker from './serviceWorker';
 import userReducer from './store/userReducer';
 import diaryReducer from './store/diaryReducer';
 
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from './store/sagas/auth';
+
 const rootReducer = combineReducers({
   usr : userReducer,
   dry: diaryReducer
 })
 
-const store = createStore(rootReducer);
+const sagaMiddleware = createSagaMiddleware();
+
+const store = createStore(rootReducer,compose(applyMiddleware(sagaMiddleware)));
+
+sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
   <Provider store={store}>

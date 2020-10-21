@@ -12,6 +12,9 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 
+// import * as actionTypes from '../../../store/actions/action'
+import {randomName} from '../../../store/actions/action';
+
 const useStyles = makeStyles({
 	root: {
 		// minWidth: 50,
@@ -45,7 +48,7 @@ const useStyles = makeStyles({
 
 
 
-const nameList = ["Liam", "Noah", "William", "James", "Oliver", "Benjamin", "Elijah", "Lucas", "Mason", "Logan"];
+//const nameList = ["Liam", "Noah", "William", "James", "Oliver", "Benjamin", "Elijah", "Lucas", "Mason", "Logan"];
 
 
 const Home = (props) => {
@@ -163,7 +166,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onRandomName : (ind) => dispatch({type: 'RANDOM_NAME', val: ind}) 
+		onRandomName : (ind) => dispatch(randomName(ind)) 
 	}
 } 
 

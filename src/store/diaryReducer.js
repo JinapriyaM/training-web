@@ -1,3 +1,5 @@
+import * as actionTypes from './actions/action'
+
 const initialState = {
     cardsDet : [{ title: "aaccaaaa", user: "bfffff", description: "fjlajffjjfjsdjfjsljfd" }],
     textTitle: "",
@@ -8,7 +10,7 @@ const initialState = {
 
 const diaryReducer = (state = initialState, action) => {
     switch(action.type){
-        case 'ADD_CARD':
+        case actionTypes.ADD_CARD:
             const updatedCardsDet = state.cardsDet.concat(action.val);
             return {
                 ...state,
@@ -16,11 +18,16 @@ const diaryReducer = (state = initialState, action) => {
                 textTitle: "",
                 textDescription: ""
             }
-        case 'SET_VALUES':
+        case actionTypes.SET_VALUES:
             return {
                 ...state,
                 textTitle: action.val.textTitle,
                 textDescription: action.val.textDescription
+            }
+        case actionTypes.FETCH_CARDS:
+            return {
+                ...state, 
+                cardsDet: action.val
             }
         default:
             return state

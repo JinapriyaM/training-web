@@ -9,6 +9,9 @@ import TextField from "@material-ui/core/TextField"
 import Collapse from "@material-ui/core/Collapse"
 //import { ContactSupportOutlined } from "@material-ui/icons";
 
+// import * as actionTypes from '../../../store/actions/action';
+import {submitCard, setValue} from '../../../store/actions/action';
+
 
 class Diary extends Component {
 	constructor(props) {
@@ -32,18 +35,7 @@ class Diary extends Component {
 			} else if (this.props.textDescription.length === 0) {
 				console.log("empty description");
 			} else {
-				this.props.onSubmitCard({ title: this.props.textTitle, user: this.props.currentUser, description: this.props.textDescription });
-				//this.props.toClearVals();
-				// this.setState(prev => ({
-				// 	det: prev.det.concat({ title: prev.textTitle, user: prev.currentUser, description: prev.textDescription }),
-				// 	textTitle: "",
-				// 	textDescription: ""
-				// }))
-				// this.setState({
-				// 	textTitle: "",
-				// 	textDescription: ""
-				// })
-
+				this.props.onSubmitCard({ title: this.props.textTitle, user: this.props.currentUser, description: this.props.textDescription, created: new Date() });
 			}
 		}
 		const handleChange = () => {
@@ -134,8 +126,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onSubmitCard : (data) => dispatch({type: 'ADD_CARD', val: data}),
-		toSetVals : (data) => dispatch({type: 'SET_VALUES', val: data})
+		onSubmitCard : (data) => dispatch(submitCard(data)),
+		toSetVals : (data) => dispatch(setValue(data))
 	}
 }
 
